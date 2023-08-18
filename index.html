@@ -22,7 +22,7 @@
       <form class="col" id="amount-form">
         <h3 class="h3 my-3 text-center text-primary">Earn</h3>
         <div
-          class="form-group d-flex align-items-center justify-content-between"
+          class="form-group d-flex align-items-center justify-content-between mb-3"
         >
           <label for="salary" class="text-nowrap me-3">Salary:</label>
           <input
@@ -31,6 +31,18 @@
             id="salary"
             min="0"
             placeholder="Enter your salary"
+          />
+        </div>
+        <div
+          class="form-group d-flex align-items-center justify-content-between"
+        >
+          <label for="out-incomes" class="text-nowrap me-3">Out Income:</label>
+          <input
+            type="number"
+            class="form-control w-75"
+            id="out-incomes"
+            min="0"
+            placeholder="Enter your out income"
           />
         </div>
         <h3 class="h3 my-3 text-center text-primary">Expenses</h3>
@@ -69,7 +81,19 @@
             class="form-control w-75"
             id="rent"
             min="0"
-            placeholder="Enter your house-rent"
+            placeholder="Enter your house rent"
+          />
+        </div>
+        <div
+          class="form-group d-flex align-items-center justify-content-between mb-3"
+        >
+          <label for="other-expenses" class="text-nowrap me-3">Other Expenses:</label>
+          <input
+            type="number"
+            class="form-control w-75"
+            id="other-expenses"
+            min="0"
+            placeholder="Enter your other expense"
           />
         </div>
 
@@ -155,9 +179,11 @@
       function calculateBudget() {
         event.preventDefault();
       const salary = parseFloat(document.getElementById("salary").value);
+      const outIncomes = parseFloat(document.getElementById("out-incomes").value);
       const food = parseFloat(document.getElementById("food").value);
       const clothes = parseFloat(document.getElementById("clothes").value);
       const rent = parseFloat(document.getElementById("rent").value);
+      const otherExpenses = parseFloat(document.getElementById("other-expenses").value);
       
 
       const calculateButton = document.getElementById("calculateButton");
@@ -167,25 +193,25 @@
       const savingBox = new bootstrap.Modal(document.getElementById("saving-box"));
 
 
-        if (isNaN(salary) || isNaN(food) || isNaN(clothes) || isNaN(rent)) {
+        if (isNaN(salary) || isNaN(outIncomes) || isNaN(food) || isNaN(clothes) || isNaN(rent) || isNaN(otherExpenses)) {
           alert.textContent = "Please fill in all expense fields.";
           floatingBox.show();
           return;
         }
 
-        if (salary < 0 || food < 0 || clothes < 0 || rent < 0) {
+        if (salary < 0 || outIncomes < 0 || food < 0 || clothes < 0 || rent < 0 || otherExpenses < 0) {
           alert.textContent = "Expenses cannot be negative.";
           floatingBox.show();
           return;
         }
 
-        if (food + clothes + rent > salary) {
+        if (food + clothes + rent + otherExpenses > salary + outIncomes) {
           alert.textContent = "Expenses cannot exceed salary.";
           floatingBox.show();
           return;
         } 
         
-        const remainingAmount = salary - (food + clothes + rent);
+        const remainingAmount = salary + outIncomes - (food + clothes + rent + otherExpenses);
 
         alert.textContent = "";
 
@@ -194,7 +220,7 @@
         document.getElementById("amount-form").classList.add("d-none");
 
         document.getElementById("expense-amount").textContent =
-          food + clothes + rent;
+          food + clothes + rent + otherExpenses;
         document.getElementById("balance-amount").textContent = remainingAmount;
 
         savingBox.show();
