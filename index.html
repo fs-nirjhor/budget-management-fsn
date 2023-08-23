@@ -183,12 +183,12 @@
     <script>
       function calculateBudget() {
         event.preventDefault();
-      const salary = Math.round(document.getElementById("salary").value);
-      const outIncomes = Math.round(document.getElementById("out-incomes").value);
-      const food = Math.round(document.getElementById("food").value);
-      const clothes = Math.round(document.getElementById("clothes").value);
-      const rent = Math.round(document.getElementById("rent").value);
-      const otherExpenses = Math.round(document.getElementById("other-expenses").value);
+      const salary = parseFloat(document.getElementById("salary").value);
+      const outIncomes = parseFloat(document.getElementById("out-incomes").value);
+      const food = parseFloat(document.getElementById("food").value);
+      const clothes = parseFloat(document.getElementById("clothes").value);
+      const rent = parseFloat(document.getElementById("rent").value);
+      const otherExpenses = parseFloat(document.getElementById("other-expenses").value);
       
 
       const calculateButton = document.getElementById("calculateButton");
@@ -225,13 +225,13 @@
         document.getElementById("amount-form").classList.add("d-none");
 
         document.getElementById("expense-amount").textContent =
-          food + clothes + rent + otherExpenses;
-        document.getElementById("balance-amount").textContent = remainingAmount;
+          (food + clothes + rent + otherExpenses).toFixed(2);
+        document.getElementById("balance-amount").textContent = remainingAmount.toFixed(2);
 
         savingBox.show();
 
         saveButton.addEventListener("click", () => {
-          const savingsPercentage = Math.round(
+          const savingsPercentage = parseFloat(
         document.getElementById("saving-input").value
       );
           if (isNaN(savingsPercentage) || savingsPercentage < 0) {
@@ -244,9 +244,9 @@
 
           const savingsAmount = (savingsPercentage / 100) * remainingAmount;
           const finalRemainingAmount = remainingAmount - savingsAmount;
-          document.getElementById("saving-amount").textContent = Math.round(savingsAmount);
+          document.getElementById("saving-amount").textContent = savingsAmount.toFixed(2);
           document.getElementById("remaining-balance").textContent =
-            Math.round(finalRemainingAmount);
+            finalRemainingAmount.toFixed(2);
 
             savingBox.hide();
         });
